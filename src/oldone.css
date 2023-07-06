@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+}
+
+.body {
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  background-color: #21222a;
+  height: 90px;
+  padding: 30px 25px;
+}
+
+nav > h2 {
+  margin: 0;
+  color: yellow;
+}
+
+nav > img {
+  height: 30px;
+  margin-right: 7px;
+}
+
+.mainTitle {
+  margin-left: 30px;
+  margin-top: 40px;
+  font-size: 40px;
+  font-weight: bolder;
+  color: rgb(87, 84, 84);
+  letter-spacing: -0.05em;
+}
+.cards {
+  display: flex;
+  justify-content: space-around;
+
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.movie-card {
+  flex-basis: 225px;
+  border-radius: 10px;
+
+  padding: 13px;
+  padding-bottom: 50px;
+  background-color: white;
+}
+
+/* Will this display the review on the card on hover?
+.review {
+  background-color: black;
+  display: none;
+}
+
+.movie-card:hover + .review {
+  display: block;
+} */
+
+.card--image {
+  width: 200px;
+  height: 300px;
+  align-self: center;
+  border-radius: 5px;
+  object-fit: contain;
+}
+.movie-card > h5 {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.form {
+  margin: 10 px;
+}
