@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stars from "./Stars";
@@ -34,7 +34,7 @@ export default function ReviewForm(props) {
         <li className="review--list">
           <span className="name">{review.name}</span>
           <br />
-          <span className="rating">TODO Stars</span>
+          <span className="rating">{review.stars}</span>
           <br />
           <p className="review">{review.review}</p>
         </li>
@@ -47,22 +47,39 @@ export default function ReviewForm(props) {
     );
   }
 
-  //update state of the form with the onChange called on each Form.Control
-  const [form, setForm] = useState({});
-  const setField = (field, value) => {
-    setForm({
-      ...form,
-      [field]: value,
-    });
-  };
+  const name = useRef(null);
+  const review = useRef(null);
+  const stars = useRef(null);
 
-  //handleSubmit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //form submission
-    setReviewArray([...reviewArray], setField());
-    //console.log(reviewArray);
-  };
+  //How do I save to the array???
+  function addReview() {
+    setReviewArray((current) => [
+      ...current,
+      {
+        id: id,
+        name: name.current.value,
+        stars: stars.current.value,
+        review: review.current.value,
+      },
+    ]);
+  }
+
+  //update state of the form with the onChange called on each Form.Control
+  // const [form, setForm] = useState({});
+  // const setField = (field, value) => {
+  //   setForm({
+  //     ...form,
+  //     [field]: value,
+  //   });
+  // };
+
+  // // //handleSubmit
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   //form submission
+  //   setReviewArray([...reviewArray, newReview]);
+  //   //console.log(reviewArray);
+  //};
 
   //take the input from name & review
   // add it to the previous array
@@ -75,15 +92,15 @@ export default function ReviewForm(props) {
       <hr />
       <h3>Rate this movie!</h3>
       <Stars />
-      <Form className="form bg-light">
+      <Form className="form container flex bg-light">
         <Form.Group className="mb-3" controlId="ControlTextarea1">
-          <Form.Label>Review</Form.Label>
+          <Form.Label>Review for {props.movie.title}</Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
             placeholder="Why don't you just tell me the name of the movie you want to see?"
             size="sm"
-            onChange={(e) => setField("review", e.target.value)}
+            ref={name}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="ControlTextarea2">
@@ -93,14 +110,15 @@ export default function ReviewForm(props) {
             rows={1}
             placeholder="Cosmo Kramer"
             size="sm"
-            onChange={(e) => setField("name", e.target.value)}
+            ref={review}
           />
         </Form.Group>
         <br />
-        <Button variant="secondary" onClick={handleSubmit}>
+        <Button variant="secondary" onClick={addReview}>
           Submit
         </Button>{" "}
       </Form>
+
       <br />
       <hr />
       <div>
@@ -111,3 +129,15 @@ export default function ReviewForm(props) {
     </div>
   );
 }
+
+// const addNewReview = ({ id, name, stars, review }) => {
+//   const newID = Math.max(...reviewArray.map((review) => review.id)) + 1;
+//   const newReview = {
+//     id: newID,
+//     name: name,
+//     stars: stars,
+//     review: review,
+//   };
+//   console.log(newReview);
+//   setReviewList([...reviewArray, newReview]);
+// };
