@@ -4,11 +4,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stars from "./Stars";
 
-export default function ReviewForm() {
+export default function ReviewForm(props) {
   //export default function ReviewForm({ movie }) {
   //console.log(movie);
 
-  const [reviewArray, setReviewArray] = React.useState([
+  const [reviewArray, setReviewArray] = useState([
     {
       id: 1,
       name: "John Doe",
@@ -26,7 +26,7 @@ export default function ReviewForm() {
   // Check for myself
   // const result = Array.isArray(reviewArray); result was true
   // console.log("isArray: " + result);
-  // //console.log(reviewArray); to make sure it is an array
+  //console.log(reviewArray);
   function showReview() {
     const itemList = reviewArray.map((review) => (
       <>
@@ -48,7 +48,7 @@ export default function ReviewForm() {
   }
 
   //update state of the form with the onChange called on each Form.Control
-  const [form, setForm] = useState([{}]);
+  const [form, setForm] = useState({});
   const setField = (field, value) => {
     setForm({
       ...form,
@@ -60,8 +60,8 @@ export default function ReviewForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //form submission
-    setReviewArray(...reviewArray, setField());
-    console.log(reviewArray);
+    setReviewArray([...reviewArray], setField());
+    //console.log(reviewArray);
   };
 
   //take the input from name & review
