@@ -1,12 +1,18 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stars from "./Stars";
 
+let nextId = 0;
+
 export default function ReviewForm(props) {
   //export default function ReviewForm({ movie }) {
   //console.log(movie);
+
+  const [newName, setNewName] = useState("");
+  const [newReview, setNewReview] = useState("");
+  const [starRating, setStarRating] = useState(0);
 
   const [reviewArray, setReviewArray] = useState([
     {
@@ -34,7 +40,7 @@ export default function ReviewForm(props) {
         <li className="review--list">
           <span className="name">{review.name}</span>
           <br />
-          <span className="rating">{review.stars}</span>
+          <span className="rating">Stars</span>
           <br />
           <p className="review">{review.review}</p>
         </li>
@@ -47,51 +53,30 @@ export default function ReviewForm(props) {
     );
   }
 
-  const name = useRef(null);
-  const review = useRef(null);
-  const stars = useRef(null);
+  //These are causing problems. I delete them and name is deprecated in line 69
+  // const name = useRef(null);
+  // const review = useRef(null);
+  // const stars = useRef(null);
 
-  //How do I save to the array???
+  //save to array
   function addReview() {
     setReviewArray((current) => [
       ...current,
       {
-        id: id,
+        id: nextId++,
         name: name.current.value,
-        stars: stars.current.value,
+        stars: starRating,
         review: review.current.value,
       },
+      //console.log(current),
     ]);
   }
-
-  //update state of the form with the onChange called on each Form.Control
-  // const [form, setForm] = useState({});
-  // const setField = (field, value) => {
-  //   setForm({
-  //     ...form,
-  //     [field]: value,
-  //   });
-  // };
-
-  // // //handleSubmit
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   //form submission
-  //   setReviewArray([...reviewArray, newReview]);
-  //   //console.log(reviewArray);
-  //};
-
-  //take the input from name & review
-  // add it to the previous array
-  // function addReview() {
-  //   setReviewArray(...reviewArray, setField());
-  // }
 
   return (
     <div className="form">
       <hr />
       <h3>Rate this movie!</h3>
-      <Stars />
+      <Stars value={starRating} onChange={setStarRating} />
       <Form className="form container flex bg-light">
         <Form.Group className="mb-3" controlId="ControlTextarea1">
           <Form.Label>Review for {props.movie.title}</Form.Label>
@@ -100,7 +85,7 @@ export default function ReviewForm(props) {
             rows={3}
             placeholder="Why don't you just tell me the name of the movie you want to see?"
             size="sm"
-            ref={name}
+            onChange={(e) => setNewName(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="ControlTextarea2">
@@ -110,7 +95,7 @@ export default function ReviewForm(props) {
             rows={1}
             placeholder="Cosmo Kramer"
             size="sm"
-            ref={review}
+            onChange={(e) => setNewName(e.target.value)}
           />
         </Form.Group>
         <br />
@@ -122,7 +107,7 @@ export default function ReviewForm(props) {
       <br />
       <hr />
       <div>
-        <h5>Reviews</h5>
+        <h5>Current Reviews</h5>
       </div>
       <div>{showReview()}</div>
       <hr />
@@ -141,3 +126,26 @@ export default function ReviewForm(props) {
 //   console.log(newReview);
 //   setReviewList([...reviewArray, newReview]);
 // };
+
+//update state of the form with the onChange called on each Form.Control
+// const [form, setForm] = useState({});
+// const setField = (field, value) => {
+//   setForm({
+//     ...form,
+//     [field]: value,
+//   });
+// };
+
+// // //handleSubmit
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+//   //form submission
+//   setReviewArray([...reviewArray, newReview]);
+//   //console.log(reviewArray);
+//};
+
+//take the input from name & review
+// add it to the previous array
+// function addReview() {
+//   setReviewArray(...reviewArray, setField());
+// }
