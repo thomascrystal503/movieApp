@@ -40,7 +40,7 @@ export default function ReviewForm(props) {
         <li className="review--list">
           <span className="name">{review.name}</span>
           <br />
-          <span className="rating">Stars</span>
+          <span className="rating">{review.stars}</span>
           <br />
           <p className="review">{review.review}</p>
         </li>
@@ -59,21 +59,25 @@ export default function ReviewForm(props) {
   // const stars = useRef(null);
 
   //save to array
-  function addReview() {
+  function addReview(e) {
+    e.preventDefault();
     setReviewArray((current) => [
       ...current,
       {
         id: nextId++,
-        name: name.current.value,
+        name: newName,
         stars: starRating,
-        review: review.current.value,
+        review: newReview,
       },
       //console.log(current),
     ]);
+    setNewName("");
+    setNewReview("");
+    setStarRating(null);
   }
 
   return (
-    <div className="form">
+    <div className="form" onSubmit={addReview}>
       <hr />
       <h3>Rate this movie!</h3>
       <Stars value={starRating} onChange={setStarRating} />
@@ -85,7 +89,8 @@ export default function ReviewForm(props) {
             rows={3}
             placeholder="Why don't you just tell me the name of the movie you want to see?"
             size="sm"
-            onChange={(e) => setNewName(e.target.value)}
+            value={newReview}
+            onChange={(e) => setNewReview(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="ControlTextarea2">
@@ -95,6 +100,7 @@ export default function ReviewForm(props) {
             rows={1}
             placeholder="Cosmo Kramer"
             size="sm"
+            value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
         </Form.Group>
